@@ -39,4 +39,4 @@ add(4,8).
         learnNT(Pos,Neg,33,10,true).
 ```
 #### Bug Reports and Feature Requests
-Please submit all bug reports and feature requests as issues on this GitHub repository or by contacting [Daniel Cyrus](d.cyrus@surrey.ac.uk).
+Please submit all bug reports and feature requests as issues on this GitHub repository or by contacting [Daniel Cyrus](mailto:d.cyrus@surrey.ac.uk?subject=[GitHub] Metagol NT bug).
