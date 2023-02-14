@@ -11,7 +11,7 @@ Copy the metagolNT.pl file in your project's folder.<br>
 Include metagolNT to your project: 
 
 ```prolog
-:- use_module('metagol').
+:- use_module('metagolNT').
 ```
 #### Learn from examples
 ##### learnNT(POS,NEG,NoisLevel,Iteration,Verbos)
