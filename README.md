@@ -7,7 +7,7 @@ A normal version of metagol is developed by <b>Andrew Cropper</b> and available 
 
 #### Using Metagol NT
 MetagolNT is written in Prolog and runs with SWI-Prolog.<br>
-Copy the metagolNT.pl file in your project's folder.<br>
+Copy the <b>metagolNT.pl</b> file into your project's folder.<br>
 Include metagolNT to your project: 
 
 ```prolog
