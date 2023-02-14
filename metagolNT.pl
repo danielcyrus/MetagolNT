@@ -1,4 +1,5 @@
 %% This file is a copyrighted under the BSD 3-clause licence, details of which can be found in the root directory.
+%% Metagol NT prolog code is developed by Daniel Cyrus 
 
 :- module(metagol,[learnNT/5,learn/2,learn/3,learn_seq/2,pprint/1,pprint/2,op(950,fx,'@')]).
 
