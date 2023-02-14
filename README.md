@@ -38,3 +38,5 @@ add(4,8).
         Neg = [mul(1,1),mul(3,3),mul(4,4)],
         learnNT(Pos,Neg,33,10,true).
 ```
+####Bug Reports and Feature Requests
+Please submit all bug reports and feature requests as issues on this GitHub repository or by contacting [Daniel Cyrus](d.cyrus@surrey.ac.uk).
