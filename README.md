@@ -14,7 +14,9 @@ Include metagolNT to your project:
 ```prolog
 :- use_module('metagol').
 ```
-Learn from examples:
+#### Learn from examples
+##### learnNT(POS,NEG,NoisLevel,Iteration,Verbos)
+The predicate learn requires 5 arguments including positive examples, negative example, nois telorance, number of iterations and verbos:
 ``` Prolog
 learnNT(Pos,Neg,33,10,true).
 ```
