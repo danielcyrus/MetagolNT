@@ -5,13 +5,16 @@ MetagolNT is a nois telorant version of Metagol. This version is implemented bas
    <br>
 A normal version of metagol is developed by <b>Andrew Cropper</b> and available from the [GitHub](https://github.com/metagol/metagol). All sample code and settings can be found from former link.
 <br><br>
-<b>Using MetagolNT</b><br>
+#### Using Metagol NT
+
 MetagolNT is written in Prolog and runs with SWI-Prolog.<br>
 Copy the metagolNT.pl file in your project's folder.<br>
 Include metagolNT to your project: 
-inline code- `:- use_module(metagolNT).`
-Learn from examples.
-block code-
+
+```prolog
+:- use_module('metagol').
+```
+Learn from examples:
 ``` Prolog
 learnNT(Pos,Neg,33,10,true).
 ```
