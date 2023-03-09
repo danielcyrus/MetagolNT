@@ -1,7 +1,8 @@
 %% This file is a copyrighted under the BSD 3-clause licence, details of which can be found in the root directory.
 %% Metagol NT prolog code is developed by Daniel Cyrus 
-
 :- module(metagol,[learnNT/5,learn/2,learn/3,learn_seq/2,pprint/1,pprint/2,op(950,fx,'@')]).
+
+:- style_check(-singleton).
 
 :- dynamic
     ibk/3,
@@ -33,9 +34,9 @@ learn(_,_,_):-!,
 
 proveall(Atoms,Sig,Prog):-
     target_predicate(Atoms,P/A),
-    format('% learning ~w\n',[P/A]),
+    %format('% learning ~w\n',[P/A]),
     iterator(MaxN),
-    format('% clauses: ~d\n',[MaxN]),
+    %format('% clauses: ~d\n',[MaxN]),
     invented_symbols(MaxN,P/A,Sig),
     assert_sig_types(Sig),
     prove_examples(Atoms,Sig,_Sig,MaxN,0,_N,[],Prog).
@@ -376,6 +377,10 @@ trainTestSamples(POS,NEG,NoisLevel,TrainPos,TestPos,TrainNeg,TestNeg):-
     testSelect(NEG,TrainNeg,[],TestNeg).
 
 
+saveAccuracy(Accuracy,TP,TN,PP,PN):-
+    retractall(accuracyNT(_,_,_,_,_)),
+    assertz(accuracyNT(Accuracy,TP,TN,PP,PN)).
+
 addToDB([]).
 addToDB([H|T]):-
     assertz(H),
@@ -419,24 +424,27 @@ learn_NT(_,_,_,0,_,_,H,Hyp):-
 learn_NT(POS,NEG,NoisLevel,Iteration,Verbos,Max_score,H,Hyp):-
     trainTestSamples(POS,NEG,NoisLevel,TrainPos,TestPos,TrainNeg,TestNeg),
     Iteration1 is Iteration - 1,
+    format('% Iteration: ~d\n',[Iteration1]),
     %//////////////learn and save rules to DB///////
-    learn(TrainPos,TrainNeg,Prog),
-    pprint(Prog,Hyps),
+    (learn(TrainPos,TrainNeg,Prog) ->
+    (pprint(Prog,Hyps),
     addToDB(Hyps),
     %//////////////////Evaluation////////////////////
     evaluate(TestPos,TestNeg,Accuracy,TP,TN,PP,PN),
     removeFromDB(Hyps),
+    saveAccuracy(Accuracy,TP,TN,PP,PN),
     %////////////////////////////////////////////////
-    (Iteration1 =< 0 -> (
-        format('|~`-t~29||~n|~w~t~5||~w~t~15||~w~t~29||~n|~`-t~29||~n|~w~t~5||~w~t~15||~w~t~29||~n|~`-t~29||~n|~w~t~5||~w~t~15||~w~t~29||~n|~`-t~29||~n',[' ','AP','AN','PP',TP,PN,'PN',PP,TN]),
-        format('Accuracy->~2f~n',[Accuracy])
-        );true),
     (Accuracy>Max_score ->
     (Max_score1 = Accuracy, 
     learn_NT(POS,NEG,NoisLevel,Iteration1,Verbos,Max_score1,Hyps,Hyp));
+    learn_NT(POS,NEG,NoisLevel,Iteration1,Verbos,Max_score,H,Hyp)));
     learn_NT(POS,NEG,NoisLevel,Iteration1,Verbos,Max_score,H,Hyp)).
 
 learnNT(POS,NEG,NoisLevel,Iteration,Verbos):-
     learn_NT(POS,NEG,NoisLevel,Iteration,Verbos,0,[],Hyp),
+    (accuracyNT(Accuracy,TP,TN,PP,PN) -> (
+        format('|~`-t~29||~n|~w~t~5||~w~t~15||~w~t~29||~n|~`-t~29||~n|~w~t~5||~w~t~15||~w~t~29||~n|~`-t~29||~n|~w~t~5||~w~t~15||~w~t~29||~n|~`-t~29||~n',[' ','AP','AN','PP',TP,PN,'PN',PP,TN]),
+        format('Accuracy->~2f~n',[Accuracy])
+    );true),
     writeln('Rule:'),
     maplist(pprint_clause,Hyp).
