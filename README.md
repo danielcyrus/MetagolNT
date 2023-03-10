@@ -20,7 +20,7 @@ The predicate learn requires 5 arguments including positive examples, negative e
 learnNT(Pos,Neg,33,10,true).
 ```
 
-The following code demonstrates learning from a few simple background knowledge and examples(The sample doesn't have any noises):
+The following code demonstrates learning from a few simple background knowledge and examples:
 ``` Prolog
 :- use_module(metagolNT).
 
