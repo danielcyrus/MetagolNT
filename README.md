@@ -34,7 +34,8 @@ add(3,6).
 add(4,8).
 
 :-
-        Pos = [mul(1,2),mul(3,6),mul(4,8)],
+        %------example,example,nois ------%
+        Pos = [mul(1,2),mul(3,6),mul(4,7)],
         Neg = [mul(1,1),mul(3,3),mul(4,4)],
         learnNT(Pos,Neg,33,10,true).
 ```
