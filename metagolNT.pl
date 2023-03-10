@@ -29,7 +29,7 @@ learn(Pos1,Neg1,Prog):-
     check_functional(Pos2,Sig,Prog).
 
 learn(_,_,_):-!,
-    writeln('% unable to learn a solution'),
+    %writeln('% unable to learn a solution'),
     false.
 
 proveall(Atoms,Sig,Prog):-
@@ -442,9 +442,10 @@ learn_NT(POS,NEG,NoisLevel,Iteration,Verbos,Max_score,H,Hyp):-
 
 learnNT(POS,NEG,NoisLevel,Iteration,Verbos):-
     learn_NT(POS,NEG,NoisLevel,Iteration,Verbos,0,[],Hyp),
-    (accuracyNT(Accuracy,TP,TN,PP,PN) -> (
+    (current_predicate(accuracyNT/5) -> (
+        accuracyNT(Accuracy,TP,TN,PP,PN),   
         format('|~`-t~29||~n|~w~t~5||~w~t~15||~w~t~29||~n|~`-t~29||~n|~w~t~5||~w~t~15||~w~t~29||~n|~`-t~29||~n|~w~t~5||~w~t~15||~w~t~29||~n|~`-t~29||~n',[' ','AP','AN','PP',TP,PN,'PN',PP,TN]),
-        format('Accuracy->~2f~n',[Accuracy])
-    );true),
-    writeln('Rule:'),
-    maplist(pprint_clause,Hyp).
+        format('Accuracy->~2f~n',[Accuracy]),
+        writeln('Rules:'),
+        maplist(pprint_clause,Hyp)
+        );write("Can't learn the theory \nTip:try to increase nois level")).
